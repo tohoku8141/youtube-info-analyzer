@@ -50,7 +50,7 @@ def analyze_transcript(transcript: str):
 
     try:
         response = client.models.generate_content(
-            model="model=gemini-flash-latest",
+            model="gemini-flash-latest",
             contents=prompt
         )
     except Exception as e:
