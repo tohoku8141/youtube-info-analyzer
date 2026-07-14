@@ -33,7 +33,7 @@ def get_transcript(video_id, languages=["ja", "en"]):
     # APIから返ってきた字幕を1つの文章にする
     transcript = ""
 
-    for item in data["transcript"]:
+    for item in data["transcript"]["text"]:
         transcript += item["text"] + " "
 
     return transcript.strip()
