@@ -45,6 +45,8 @@ def analyze_transcript(transcript: str):
 
 {transcript}
 """
+    print("API KEY:", os.getenv("GEMINI_API_KEY")[:15])
+    print("MODEL:", "gemini-2.5-flash-lite")
 
     response = client.models.generate_content(
         model="gemini-2.5-flash-lite",
