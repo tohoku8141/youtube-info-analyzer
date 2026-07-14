@@ -57,6 +57,8 @@ def analyze_transcript(transcript: str):
         print("Gemini ERROR:", repr(e))
         raise
 
+    print("Gemini succeeded!")
+
     text = response.text.strip()
 
     # ```json ～ ``` を除去
