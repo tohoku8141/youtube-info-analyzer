@@ -1,19 +1,39 @@
-from youtube_transcript_api import YouTubeTranscriptApi
+import os
+import requests
+
+RAPIDAPI_KEY = os.getenv("RAPIDAPI_KEY")
+
+URL = "https://youtube-transcript-api13.p.rapidapi.com/transcript"
 
 
-def get_transcript(video_id: str, languages=["ja", "en"]):
-    """
-    字幕を取得して1つの文字列にまとめる
-    """
+def get_transcript(video_id, languages=["ja", "en"]):
+    youtube_url = f"https://www.youtube.com/watch?v={video_id}"
 
-    transcript = YouTubeTranscriptApi().fetch(
-        video_id,
-        languages=languages
+    headers = {
+        "x-rapidapi-key": RAPIDAPI_KEY,
+        "x-rapidapi-host": "youtube-transcript-api13.p.rapidapi.com",
+    }
+
+    params = {
+        "url": youtube_url,
+        "flat_text": "false",
+    }
+
+    response = requests.get(
+        URL,
+        headers=headers,
+        params=params,
+        timeout=30,
     )
 
-    text = ""
+    response.raise_for_status()
 
-    for item in transcript:
-        text += item.text + " "
+    data = response.json()
 
-    return text.strip()
+    # APIから返ってきた字幕を1つの文章にする
+    transcript = ""
+
+    for item in data["transcript"]:
+        transcript += item["text"] + " "
+
+    return transcript.strip()
