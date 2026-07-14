@@ -48,10 +48,14 @@ def analyze_transcript(transcript: str):
     print("API KEY:", os.getenv("GEMINI_API_KEY")[:15])
     print("MODEL:", "gemini-2.5-flash-lite")
 
-    response = client.models.generate_content(
-        model="gemini-2.5-flash-lite",
-        contents=prompt
-    )
+    try:
+        response = client.models.generate_content(
+            model="gemini-2.5-flash-lite",
+            contents=prompt
+        )
+    except Exception as e:
+        print("Gemini ERROR:", repr(e))
+        raise
 
     text = response.text.strip()
 
