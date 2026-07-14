@@ -1,18 +1,12 @@
-from youtube_api import get_video_info, get_top_comments
+import os
+from dotenv import load_dotenv
+from google import genai
 
-url = input("YouTube URL: ")
+load_dotenv()
 
-info = get_video_info(url)
+client = genai.Client(
+    api_key=os.getenv("GEMINI_API_KEY")
+)
 
-comments = get_top_comments(info["video_id"])
-
-print()
-print("===== 人気コメント =====")
-print()
-
-for i, comment in enumerate(comments, start=1):
-
-    print(f"{i}位")
-    print(f"👍 {comment['likes']}")
-    print(comment["text"])
-    print("-" * 50)
+for model in client.models.list():
+    print(model.name)

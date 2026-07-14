@@ -6,10 +6,9 @@ from google import genai
 
 load_dotenv()
 
-client = genai.Client(
-    api_key=os.getenv("GEMINI_API_KEY")
-)
-
+key = os.getenv("GEMINI_API_KEY")
+print("API KEY:", key[:10] + "...")
+client = genai.Client(api_key=key)
 
 def analyze_transcript(transcript: str):
 
